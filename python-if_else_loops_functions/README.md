@@ -1,1 +1,1 @@
-In this project we will be working with the conditional statements in Python.
+In this project I will be working with the import_modules in Python
