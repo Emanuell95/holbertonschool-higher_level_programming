@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 Using ``matrix_divided``
 -----------------------
 
