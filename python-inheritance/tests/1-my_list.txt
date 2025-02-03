@@ -1,0 +1,26 @@
+#!/usr/bin/python3
+import unittest
+from 1-my_list import MyList
+
+class TestMyList(unittest.TestCase):
+    def test_sorted_output(self):
+        my_list = MyList()
+        my_list.append(3)
+        my_list.append(1)
+        my_list.append(4)
+        my_list.append(2)
+        
+        expected_output = "[1, 2, 3, 4]\n"
+        with self.assertLogs() as captured:
+            my_list.print_sorted()
+        
+        self.assertEqual(captured.output[0], f'INFO:root:{expected_output}')
+    
+    def test_list_unchanged(self):
+        my_list = MyList([5, 3, 8, 1])
+        original_list = my_list[:]
+        my_list.print_sorted()
+        self.assertEqual(my_list, original_list)
+
+if __name__ == "__main__":
+    unittest.main()
