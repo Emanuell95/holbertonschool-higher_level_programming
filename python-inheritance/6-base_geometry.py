@@ -1,37 +1,23 @@
 #!/usr/bin/python3
 """
-This module provides functions to check the inheritance and instance relationships of objects.
+This module defines a base class for geometric operations.
+It provides a method to compute the area of a geometric shape.
+If the method is not yet implemented, it raises an exception.
 
-Functions:
-    is_kind_of_class(obj, a_class):
-        Determines whether an object is an instance of a class or an instance of a subclass of that class.
-    inherits_from(obj, a_class):
-        Determines whether an object is an instance of a subclass (directly or indirectly) of a specified class,
-        but not an instance of the specified class itself.
 """
-def is_kind_of_class(obj, a_class):
+class BaseGeometry:
     """
-    Determines if an object is an instance of a class or an instance of a subclass of that class.
+    A base class for geometry-related operations.
 
-    Args:
-        obj (object): The object to check.
-        a_class (type): The class to check against.
-
-    Returns:
-        bool: True if obj is an instance of a_class or a subclass, False otherwise.
+    This class serves as a foundation for geometric computations.
+    It defines a method that must be implemented by subclasses.
     """
-    return isinstance(obj, a_class)
 
-def inherits_from(obj, a_class):
-    """
-    Determines if an object is an instance of a subclass (directly or indirectly) of a specified class,
-    but not an instance of the specified class itself.
+    def area(self):
+        """
+        Compute the area of a geometric shape.
 
-    Args:
-        obj (object): The object to check.
-        a_class (type): The class to check against.
-
-    Returns:
-        bool: True if obj is an instance of a subclass of a_class, but not a direct instance of a_class.
-    """
-    return isinstance(obj, a_class) and type(obj) is not a_class
+        Raises:
+            Exception: Indicates that the method is not yet implemented.
+        """
+        raise Exception("area() is not implemented")
