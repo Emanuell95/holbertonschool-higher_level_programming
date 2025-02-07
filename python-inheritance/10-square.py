@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-""" This module defines a class Rectangle """
 """
 This module defines geometric classes: BaseGeometry, Rectangle, and Square.
 
@@ -135,4 +134,4 @@ class Square(Rectangle):
         Returns:
             str: A string in the format [Square] <size>/<size>
         """
-        return f"[Rectangle] {self.__size}/{self.__size}"
+        return f"[Square] {self.__size}/{self.__size}"
