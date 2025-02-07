@@ -1,12 +1,8 @@
 #!/usr/bin/python3
 class MyList(list):
     def print_sorted(self):
-        
         """
-        Prints a sorted version of the list
+        Prints a sorted version of the list without modifying the original list.
         """
-        sorted_list = sorted(self)
-        print(sorted(self))
-
-my_list = MyList([1,2,5,8,3])
-my_list.print_sorted()
+        sorted_list = sorted(self)  # Sort the list without changing the original
+        print(sorted_list)
