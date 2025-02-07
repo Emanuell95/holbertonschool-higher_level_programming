@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+This module defines the BaseGeometry class and the Rectangle class.
+It also defines the Square class that inherits from Rectangle.
+If the method is not yet implemented, it raises an exception."""
 class BaseGeometry:
     def area(self):
         """
