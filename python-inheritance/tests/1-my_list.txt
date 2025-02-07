@@ -1,9 +1,14 @@
 #!/usr/bin/python3
 import unittest
 from 1-my_list import MyList
+from io import StringIO
+import sys
 
 class TestMyList(unittest.TestCase):
     def test_sorted_output(self):
+        """
+        Test if print_sorted() prints the sorted list correctly.
+        """
         my_list = MyList()
         my_list.append(3)
         my_list.append(1)
@@ -11,14 +16,18 @@ class TestMyList(unittest.TestCase):
         my_list.append(2)
         
         expected_output = "[1, 2, 3, 4]\n"
-        with self.assertLogs() as captured:
-            my_list.print_sorted()
         
-        self.assertEqual(captured.output[0], f'INFO:root:{expected_output}')
+        # Capture printed output
+        with unittest.mock.patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            my_list.print_sorted()
+            self.assertEqual(mock_stdout.getvalue(), expected_output)
     
     def test_list_unchanged(self):
+        """
+        Test if the original list remains unchanged after calling print_sorted().
+        """
         my_list = MyList([5, 3, 8, 1])
-        original_list = my_list[:]
+        original_list = my_list[:]  # Make a copy of the original list
         my_list.print_sorted()
         self.assertEqual(my_list, original_list)
 
