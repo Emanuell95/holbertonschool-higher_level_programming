@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+This module defines a base class for geometric operations.
+It provides a method to calculate the area of a geometric shape and a method to validate if a given value is a positive integer.
+If the method is not yet implemented, it raises an exception."""
 class BaseGeometry:
     def area(self):
         """
