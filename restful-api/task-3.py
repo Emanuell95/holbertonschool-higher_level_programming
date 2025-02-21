@@ -1,8 +1,4 @@
 #!/usr/bin/python3
-"""
-This script creates a simple API using http.server.
-It provides endpoints for getting information about the API, its status, and data.
-It also provides a default endpoint that returns a message."""
 import http.server
 import json
 from http import HTTPStatus
@@ -10,16 +6,17 @@ from http import HTTPStatus
 class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         """
-        Handles GET requests.
+        Handles a GET request to the server.
         
-        Supported endpoints are:
-        - '/': Returns a plain text message with a greeting.
-        - '/data': Returns a JSON object with some example data.
-        - '/status': Returns a JSON object with the API status.
-        - '/info': Returns a JSON object with some information about the API.
+        The server responds to the following endpoints:
         
-        All other endpoints return a JSON object with an error message.
+        * / : A simple text response with a "Hello, this is a simple API!" message.
+        * /data : Returns a JSON object containing some sample data.
+        * /status : Returns a JSON object with a "status" key and a value of "OK".
+        * /info : Returns a JSON object with some information about the API.
+        * All other endpoints : Returns a JSON object with a 404 error message.
         """
+        
         if self.path == '/':
             self.send_response(HTTPStatus.OK)
             self.send_header("Content-type", "text/plain")
