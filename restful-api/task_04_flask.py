@@ -2,10 +2,7 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-# In-memory storage for users
-users = {
-    "jane": {"username": "jane", "name": "Jane", "age": 28, "city": "Los Angeles"}
-}
+users = {}
 
 @app.route('/')
 def home():
@@ -13,7 +10,7 @@ def home():
 
 @app.route('/data')
 def get_data():
-    return jsonify(list(users.keys()))
+    return jsonify(sorted(list(users.keys())))  # Return a sorted list for consistency
 
 @app.route('/status')
 def status():
@@ -33,9 +30,9 @@ def add_user():
         return jsonify({"error": "Username is required"}), 400
     
     username = data["username"]
-    if username in users:
+    if username in users:  # Ensure duplicate check works correctly
         return jsonify({"error": "User already exists"}), 400
-    
+
     users[username] = {
         "username": username,
         "name": data.get("name"),
