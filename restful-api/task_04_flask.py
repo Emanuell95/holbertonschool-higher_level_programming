@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
+# Start with an empty dictionary
 users = {}
 
 @app.route('/')
@@ -31,13 +32,12 @@ def add_user():
     if not data or "username" not in data:
         return jsonify({"error": "Username is required"}), 400
     
-    username = data["username"].strip().lower()  # Ensure consistent username storage (case-insensitive)
+    username = data["username"].strip().lower()  # Normalize username (lowercase, no spaces)
 
     # Check for duplicate username
     if username in users:
         return jsonify({"error": "User already exists"}), 400
 
-    # Store user data with lowercase username to prevent case-sensitive duplicates
     users[username] = {
         "username": username,  # Ensure username is stored properly
         "name": data.get("name"),
