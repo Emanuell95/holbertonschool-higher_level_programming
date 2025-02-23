@@ -2,21 +2,28 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-# Start with an empty dictionary
-users = {}
+# In-memory users dictionary
+users = {
+    "jane": {"username": "jane", "name": "Jane", "age": 28, "city": "Los Angeles"},
+    "john": {"username": "john", "name": "John", "age": 30, "city": "New York"}
+}
 
+# Home endpoint
 @app.route('/')
 def home():
     return "Welcome to the Flask API!"
 
-@app.route('/data')
-def get_data():
-    return jsonify(sorted(list(users.keys())))  # Ensure a consistent order
-
+# Status endpoint
 @app.route('/status')
 def status():
     return "OK"
 
+# Get all usernames
+@app.route('/data')
+def get_users():
+    return jsonify(list(users.keys()))
+
+# Get user details
 @app.route('/users/<username>')
 def get_user(username):
     user = users.get(username)
@@ -24,28 +31,29 @@ def get_user(username):
         return jsonify(user)
     return jsonify({"error": "User not found"}), 404
 
+# Add a new user
 @app.route('/add_user', methods=['POST'])
 def add_user():
     data = request.get_json()
-
-    # Check if JSON data is valid and contains "username"
-    if not data or "username" not in data:
+    
+    if not data or 'username' not in data:
         return jsonify({"error": "Username is required"}), 400
     
-    username = data["username"].strip().lower()  # Normalize username (lowercase, no spaces)
-
-    # Check for duplicate username (strict match)
+    username = data['username']
     if username in users:
-        return jsonify({"error": "User already exists"}), 400  # Ensure exact message format
-
+        return jsonify({"error": "User already exists"}), 400
+    
     users[username] = {
-        "username": username,  # Ensure username is stored properly
-        "name": data.get("name"),
-        "age": data.get("age"),
-        "city": data.get("city")
+        "username": username,
+        "name": data.get("name", ""),
+        "age": data.get("age", 0),
+        "city": data.get("city", "")
     }
-
-    return jsonify({"message": "User added", "user": users[username]}), 201
+    
+    return jsonify({
+        "message": "User added",
+        "user": users[username]
+    }), 201
 
 if __name__ == "__main__":
     app.run(debug=True)
