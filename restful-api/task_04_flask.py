@@ -34,9 +34,9 @@ def add_user():
     
     username = data["username"].strip().lower()  # Normalize username (lowercase, no spaces)
 
-    # Check for duplicate username
+    # Check for duplicate username (strict match)
     if username in users:
-        return jsonify({"error": "User already exists"}), 400
+        return jsonify({"error": "User already exists"}), 400  # Ensure exact message format
 
     users[username] = {
         "username": username,  # Ensure username is stored properly
