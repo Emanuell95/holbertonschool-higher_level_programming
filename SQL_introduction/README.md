@@ -1,0 +1,1 @@
+In this project, I am learning the basics of SQL, which is essential to connect and Create, Read, Update, and Delete information in a relational Database.
