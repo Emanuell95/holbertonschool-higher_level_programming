@@ -1,2 +1,2 @@
 -- Getting a specific id from the table first_table
-SELECT * FROM first_table WHERE id = 89;
+SELECT COUNT(*) AS count FROM first_table WHERE id = 89;
