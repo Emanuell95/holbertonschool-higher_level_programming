@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Lists all states from the database hbtn_0e_0_usa.
+Listing all states from the database hbtn_0e_0_usa.
 Takes 3 arguments: mysql username, mysql password, and database name.
 """
 
