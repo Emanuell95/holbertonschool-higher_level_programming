@@ -7,6 +7,7 @@ Takes 3 arguments: mysql username, mysql password, and database name.
 import MySQLdb
 import sys
 
+
 if __name__ == "__main__":
     # Get MySQL credentials from command-line arguments
     username = sys.argv[1]
