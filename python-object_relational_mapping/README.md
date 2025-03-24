@@ -1,0 +1,1 @@
+In this project I am working with Python Object Relational Mapping (ORM) that is a technique that allows you to interact with relational databases using object-oriented code instead of writing SQL queries directly. Its main use is to facilitate development, improve maintainability, and reduce errors in data handling.

@@ -1,0 +1,1 @@
+In this project I am working with more SQL queries,and aditionally I am practicing the topic of the privileges and access within databases, which is so important in industries and any other work area that works with data.
