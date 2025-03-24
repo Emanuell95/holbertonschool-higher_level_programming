@@ -2,99 +2,56 @@ from flask import Flask, render_template, request
 import json
 import csv
 import sqlite3
-import os
 
 app = Flask(__name__)
 
-# Function to read data from JSON file
-def read_json_data():
+def get_data_from_json():
     try:
-        with open('products.json', 'r') as f:
-            return json.load(f)
+        with open("products.json", "r") as file:
+            return json.load(file)
     except Exception as e:
-        print(f"Error reading JSON file: {e}")
-        return None
+        return {"error": f"Error loading JSON: {str(e)}"}
 
-# Function to read data from CSV file
-def read_csv_data():
+def get_data_from_csv():
     try:
-        products = []
-        with open('products.csv', 'r') as f:
-            csv_reader = csv.DictReader(f)
-            for row in csv_reader:
-                products.append(row)
-        return products
+        with open("products.csv", "r") as file:
+            reader = csv.DictReader(file)
+            return [row for row in reader]
     except Exception as e:
-        print(f"Error reading CSV file: {e}")
-        return None
+        return {"error": f"Error loading CSV: {str(e)}"}
 
-# Function to read data from SQLite database
-def read_sqlite_data():
+def get_data_from_sql():
     try:
-        conn = sqlite3.connect('products.db')
-        # Set row_factory to get dictionary-like objects
-        conn.row_factory = sqlite3.Row
+        conn = sqlite3.connect("products.db")
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM Products')
+        cursor.execute("SELECT id, name, category, price FROM Products")
         rows = cursor.fetchall()
-        
-        # Convert rows to dictionaries
-        products = []
-        for row in rows:
-            products.append({key: row[key] for key in row.keys()})
-        
         conn.close()
-        return products
+
+        return [
+            {"id": row[0], "name": row[1], "category": row[2], "price": row[3]}
+            for row in rows
+        ]
     except Exception as e:
-        print(f"Error reading SQLite database: {e}")
-        return None
-
-# Function to create and populate the database if it doesn't exist
-def setup_database():
-    if not os.path.exists('products.db'):
-        conn = sqlite3.connect('products.db')
-        cursor = conn.cursor()
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS Products (
-                id INTEGER PRIMARY KEY,
-                name TEXT NOT NULL,
-                category TEXT NOT NULL,
-                price REAL NOT NULL
-            )
-        ''')
-        cursor.execute('''
-            INSERT INTO Products (id, name, category, price)
-            VALUES
-            (1, 'Laptop', 'Electronics', 799.99),
-            (2, 'Coffee Mug', 'Home Goods', 15.99)
-        ''')
-        conn.commit()
-        conn.close()
-        print("Database created and populated successfully")
-
-# Set up the database when the application starts
-setup_database()
+        return {"error": f"Error loading SQL data: {str(e)}"}
 
 @app.route('/')
-def index():
-    source = request.args.get('source', default='json')
-    
+def display_products():
+    source = request.args.get('source', 'json')
     if source == 'json':
-        data = read_json_data()
-        if data is None:
-            return "Error reading JSON data", 500
+        data = get_data_from_json()
     elif source == 'csv':
-        data = read_csv_data()
-        if data is None:
-            return "Error reading CSV data", 500
+        data = get_data_from_csv()
     elif source == 'sql':
-        data = read_sqlite_data()
-        if data is None:
-            return "Error reading SQLite data", 500
+        data = get_data_from_sql()
     else:
-        return "Wrong source", 400
-    
-    return render_template('product_display.html', products=data)
+        return render_template('product_display.html', products=None, error="Wrong source")
 
-if __name__ == '__main__':
+    # Check for error inside the returned data
+    if isinstance(data, dict) and "error" in data:
+        return render_template('product_display.html', products=None, error=data["error"])
+
+    return render_template('product_display.html', products=data, error=None)
+
+if __name__ == "__main__":
     app.run(debug=True)
