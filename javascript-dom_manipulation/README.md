@@ -1,1 +1,1 @@
-In this project I am working with DOM manipulation which is essential it let us make the webpages dynamic and interactive. 
+In this project I am working with DOM manipulation which is essential it let us make the webpages dynamic and interactive. It works like a bridge between the JavaScript code and the visual content of the browser.
