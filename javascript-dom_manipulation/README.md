@@ -1,0 +1,1 @@
+In this project I am working with DOM manipulation which is essential it let us make the webpages dynamic and interactive. 
