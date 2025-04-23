@@ -1,6 +1,4 @@
 #!/usr/bin/python3
-'''
-This module creates a copy of a list using the function copy_list'''
 copy_list = __import__('19-copy_list').copy_list
 
 my_list = [1, 2, 3]
